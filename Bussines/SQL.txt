@@ -1,0 +1,52 @@
+CREATE TABLE IF NOT EXISTS `business_points` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `business_type` varchar(50) NOT NULL, -- Tipo de negocio (ej: "workshop", "store")
+  `point_type` varchar(50) NOT NULL,    -- Tipo de punto (ej: "tuning", "stash", "location")
+  `coords` text NOT NULL,               -- Coordenadas del punto (en formato JSON)
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE IF NOT EXISTS `billing` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identifier` varchar(60) NOT NULL,    -- Identificador del jugador que recibe la factura
+  `sender` varchar(60) NOT NULL,        -- Identificador del jugador que emite la factura
+  `target` varchar(60) NOT NULL,        -- Identificador del jugador que recibe la factura
+  `amount` int(11) NOT NULL,            -- Cantidad de la factura
+  `label` varchar(255) NOT NULL,        -- Descripción de la factura
+  `paid` tinyint(1) NOT NULL DEFAULT 0, -- Estado de la factura (0 = no pagada, 1 = pagada)
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) 
+VALUES ('tablet', 'Tablet de Gestión', 1, 0, 1);
+
+
+CREATE TABLE IF NOT EXISTS `jobs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `job_name` varchar(50) NOT NULL,       -- Nombre del trabajo (ej: "mechanic", "police")
+  `job_label` varchar(50) NOT NULL,      -- Etiqueta del trabajo (ej: "Mecánico", "Policía")
+  `coords` text NOT NULL,                -- Coordenadas del trabajo (en formato JSON)
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Fecha de creación
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `garages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `job_name` varchar(50) NOT NULL,       -- Nombre del trabajo asociado (ej: "mechanic")
+  `type` varchar(50) NOT NULL,           -- Tipo de garaje (empresa o personal)
+  `coords` text NOT NULL,                -- Coordenadas del garaje (en formato JSON)
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `garage_vehicles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `garage_id` int(11) NOT NULL,          -- ID del garaje
+  `vehicle_model` varchar(50) NOT NULL,  -- Modelo del vehículo (ej: "adder")
+  `vehicle_props` text NOT NULL,         -- Propiedades del vehículo (en formato JSON)
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`garage_id`) REFERENCES `garages`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+

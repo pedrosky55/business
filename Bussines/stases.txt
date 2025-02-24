@@ -1,0 +1,17 @@
+ 
+     ['workshop_stash'] = {
+    label = 'Inventario del Taller',
+    slots = 50,
+    weight = 100000,
+    owner = false, -- No es un stash personalizado
+    coords = vector3(120.0, -1000.0, 30.0) -- Ubicación del stash
+	},
+
+   
+['store_stash'] = {
+    label = 'Inventario de la Tienda',
+    slots = 50,
+    weight = 100000,
+    owner = false, -- No es un stash personalizado
+    coords = vector3(30.0, -1347.0, 29.5) -- Ubicación del stash
+    },
